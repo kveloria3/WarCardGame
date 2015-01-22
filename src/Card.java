@@ -5,150 +5,46 @@ public class Card extends PlayingCard implements Comparable<Card>
   {
     super(suit, rank);
   }
-  
-  public String toString()
+  public  String toString()
   {
-    if(suit==1)
+    String suit=""+this.getSuit();
+    if(getSuit()== 1)
     {
-      if(rank==10)
-      {
-        return "H-T";
-      }
-      
-      else if (rank==11)
-      {
-        return "H-J";
-      }
-      
-      else if (rank==12)
-      {
-        return "H-Q";
-      }
-      
-      else if (rank==13)
-      {
-        return "H-K";
-      }
-      
-      else if (rank==1)
-      {
-        return "H-A";
-      }
-      
-      else
-      {
-        return "H-"+this.getRank();
-      }
+      suit = "H";
     }
-    
-    if(suit==2)
+    if(getSuit() == 2)
     {
-      if(rank==10)
-      {
-        return "C-T";
-      }
-      
-      else if (rank==11)
-      {
-        return "C-J";
-      }
-      
-      else if (rank==12)
-      {
-        return "C-Q";
-      }
-      
-      else if (rank==13)
-      {
-        return "C-K";
-      }
-      
-      else if (rank==1)
-      {
-        return "C-A";
-      }
-      
-      else
-      {
-        return "C-"+this.getRank();
-      }
+      suit= "C";
     }
-    
-    if(suit==3)
+    if(getSuit() == 3)
     {
-      if(rank==10)
-      {
-        return "S-T";
-      }
-      
-      else if (rank==11)
-      {
-        return "S-J";
-      }
-      
-      else if (rank==12)
-      {
-        return "S-Q";
-      }
-      
-      else if (rank==13)
-      {
-        return "S-K";
-      }
-      
-      else if (rank==1)
-      {
-        return "S-A";
-      }
-      
-      else
-      {
-        return "S-"+this.getRank();
-      }
+      suit = "D";
     }
-    
-    if(suit==4)
+    if(getSuit() == 4)
     {
-      if(rank==10)
-      {
-        return "D-T";
-      }
-      
-      else if (rank==11)
-      {
-        return "D-J";
-      }
-      
-      else if (rank==12)
-      {
-        return "D-Q";
-      }
-      
-      else if (rank==13)
-      {
-        return "D-K";
-      }
-      
-      else if (rank==1)
-      {
-        return "D-A";
-      }
-      
-      else
-      {
-        return "D-"+this.getRank();
-      }
+      suit = "S";
     }
-    else 
+    String rank= ""+getRank();
+    if(getRank()== 11)
     {
-      return "invalid card";
+      rank= "J";
     }
+    if(getRank() == 12)
+    {
+      rank= "Q";
+    }
+    if(getRank() == 13)
+    {
+      rank= "K";
+    }
+    if(getRank() == 1)
+    {
+      rank= "A";
+    }
+    return suit+"-"+rank;
   }
-  
-  
-  public int compareTo(Card other)
+  public int compareTo(Card card)
   {
-    return this.getRank()-other.getRank();
+    return getRank()- card.getRank();
   }
 }
-
