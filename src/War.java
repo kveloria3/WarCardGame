@@ -1,119 +1,129 @@
+import java.util.ArrayList;
 public class War {
-
-	public static void main(String[] args)
-  {
-    CardDeck deck= new CardDeck();
-    CardList playerACards= new CardList();
-    CardList playerBCards= new CardList();
-    CardList stackA= new CardList();
-    CardList stackB= new CardList();
-    int round=1; 
+  
+  public static void main(String[] args) {
+    // create deck, hands and stacks
+    CardDeck deck = new CardDeck();
+    CardList p1 = new CardList();
+    CardList p2 = new CardList();
+    CardList stacka = new CardList();
+    CardList stackb = new CardList();
+    System.out.println("A --- PLAYER --- B");
+    System.out.println(deck.size());
     
-    //shuffle the deck.
-    deck.shuffle();
     
-    //Adds cards to player A's deck.
-    for(int i=0; i<deck.size(); i++)
+    
+    
+    for(int i = 0; i<26; i++)
     {
-      playerACards.addCardToBottom(deck.takeCardFromTop());
+      Card c = deck.takeCardFromTop();
+      p1.addCardToTop(c);
     }
-    
-    //Adds cards to player B's deck.
-    playerBCards= deck;
-    
-    
-    //Playing the Game (Taking a Turn)
-    System.out.println("WELCOME TO WAR!!!");
-    System.out.println("A---Player---B");
-    System.out.println("______________");
-    while(playerACards.size()!=0 && playerBCards.size()!=0)
+    for(int j = 0; j<26; j++)
     {
-      System.out.println(playerACards.size()+" ROUND-"+round+" "+playerBCards.size());
-      //Both players turn over a card
-      stackA.addCardToTop(playerACards.takeCardFromTop());
+      Card d = deck.takeCardFromTop();
+      p2.addCardToTop(d);
+    }
+    int round = 1;
+    while(p1.size()>0 && p2.size()>0)
+    {
+      System.out.println(p1.size()+" ---Round"+" "+round+"--- "+p2.size());
+      Card c1 = p1.takeCardFromTop();
+      Card c2 = p2.takeCardFromTop();
       
-      stackB.addCardToTop(playerBCards.takeCardFromTop());
-      System.out.println("   "+stackA.get(0).toString()+":"+stackB.get(0).toString()+"   ");
-      //This is when a WAR happens!
-      while(stackA.size()>0 && stackB.size()>0 && stackA.get(0).compareTo(stackB.get(0))==0)
-      {
-        
-        //if player A doesn't have enough cards for war, add cards to Player B'sDeck
-        
-        if(playerACards.size()<2)
-        {
-          System.out.println("Player A Doesn't Have Enough Cards For War!");
-          for(int i=0; i<stackB.size(); i=0)
-          {
-            playerBCards.addCardToTop(stackA.takeCardFromTop());
-            playerBCards.addCardToTop(stackB.takeCardFromTop());
-          }
-          
-          if(playerACards.size()>0)
-          {
-            playerBCards.addCardToTop(playerACards.takeCardFromTop());
-          }
-        }
-        //if player B doesn't have enough cards for war, add cards to Player B'sDeck
-        
-        else if(playerBCards.size()<2)
-        {
-          System.out.println("Player B Doesn't Have Enough Cards For War!");
-          System.out.println(playerBCards.size());
-          for(int i=0; i<stackB.size(); i=0)
-          {
-            playerACards.addCardToTop(stackB.takeCardFromTop());
-            playerACards.addCardToTop(stackA.takeCardFromTop());
-          }
-          if(playerBCards.size()>0)
-          {
-            playerACards.addCardToTop(playerBCards.takeCardFromTop());
-          }
-        }
-        else
-        {
-          System.out.println("-----War!-----");
-          stackA.addCardToTop(playerACards.takeCardFromTop());
-          stackA.addCardToTop(playerACards.takeCardFromTop());
-          stackB.addCardToTop(playerBCards.takeCardFromTop());
-          stackB.addCardToTop(playerBCards.takeCardFromTop());
-          System.out.println("   "+stackA.get(0).toString()+":"+stackB.get(0).toString()+"   ");
-        }
-      }
-      //If player A wins, add cards to their pile
-      if(stackB.size()==0 || stackA.get(0).compareTo(stackB.get(0))>0)
-      {
-        for(int i=0; i<stackB.size(); i=0)
-        {
-          playerACards.addCardToTop(stackA.takeCardFromTop());
-          playerACards.addCardToTop(stackB.takeCardFromTop());
-        }
-      }
       
-      //If player B wins, add cards to their pile
+      System.out.println(c1.toString()+":"+c2.toString());
+      
+      stacka.addCardToTop(c1);
+      
+      stackb.addCardToTop(c2);
+      if(c1.compareTo(c2)>0)
+      {
+        System.out.println("p1 wins");
+        p1.addCardToBottom(stacka.takeCardFromTop());
+        p1.addCardToBottom(stackb.takeCardFromTop());
+      }
+      else if(c1.compareTo(c2)<0)
+      {
+        System.out.println("p2 wins");
+        
+        p2.addCardToBottom(stacka.takeCardFromTop());
+        p2.addCardToBottom(stackb.takeCardFromTop());
+      }
       else
       {
-        for(int i=0; i<stackB.size(); i=0)
+        
+        
+        
+        while((stacka.getCard(0)).compareTo(stackb.getCard(0))==0)
         {
-          playerBCards.addCardToTop(stackA.takeCardFromTop());
-          playerBCards.addCardToTop(stackB.takeCardFromTop());
+          System.out.println("In war while loop!");
+          
+          if(p1.size()<2) //player one has no more cards unable to do war
+          {
+            System.out.println("Player Two Wins!");
+            for(int i=0; i<p1.size(); i=0)
+            {
+              stackb.addCardToBottom(p1.getCard(0));
+              p1.remove(0);
+            }
+            break;
+          }
+          else if(p2.size()<2)//player two has no more cards unvableto dowar
+          {
+            System.out.println("Player One Wins!");
+            for(int i=0; i<p2.size(); i=0)
+            {
+              stacka.addCardToBottom(p2.getCard(0));
+              p2.remove(0);
+            }
+            break;
+          }
+          stacka.addCardToTop(p1.takeCardFromTop());
+          stackb.addCardToTop(p2.takeCardFromTop());
+          
+          stacka.addCardToTop(p1.takeCardFromTop());
+          
+          stackb.addCardToTop(p2.takeCardFromTop());
+          System.out.print(stacka.getCard(0).toString()+stackb.getCard(0).toString());
+          
+          
+        }
+        
+        if(stacka.getCard(0).compareTo(stackb.getCard(0))>0 && p1.size()>0 && p2.size()>0)
+        {
+
+          System.out.println("p1 wins WAR!");
+          for(int i = 0; i<stacka.size(); i=0)
+          {
+            p1.addCardToBottom(stacka.getCard(0));
+            stacka.remove(0);
+            p1.addCardToBottom(stackb.getCard(0));
+            stackb.remove(0);
+            
+            
+          }
+        }
+        else if(stacka.getCard(0).compareTo(stackb.getCard(0)) < 0 && p1.size()>0 && p2.size()>0)
+        {
+
+          System.out.println("p2 wins WAR!");
+          for(int i = 0; i<stacka.size(); i=0)
+          {
+            
+            p2.addCardToBottom(stacka.getCard(0));
+            stacka.remove(0);
+            p2.addCardToBottom(stackb.getCard(0));
+            stackb.remove(0);
+            
+          }
         }
       }
-      // Incread round number
+      
+      
       round++;
+      
+      
     }
-    //Game Over, Announce Winner
-    if(playerACards.size()!=0)
-    {
-      System.out.println("--GAME OVER!--");
-      System.out.println("PLAYER A VICTORIOUS!");
-    }
-    
-    else
-    {
-      System.out.println("--GAME OVER!--");
-      System.out.println("PLAYER B VICTORIOUS!");
-    }
-    
   }
 }
